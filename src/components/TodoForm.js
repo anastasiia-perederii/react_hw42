@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTodoAsync } from '../store/todoSlice';
 
-const TodoForm = ({ inputValue, handleInputChange, handleAddTodo }) => {
+const TodoForm = () => {
+  const [title, setTitle] = useState('');
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addTodoAsync(title));
+    setTitle('');
+  };
+
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder="Enter todo..."
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Додати нове завдання"
       />
-      <button onClick={handleAddTodo}>Add Todo</button>
-    </div>
+      <button type="submit">Додати</button>
+    </form>
   );
 };
 

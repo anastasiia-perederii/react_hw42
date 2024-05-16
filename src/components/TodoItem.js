@@ -1,18 +1,18 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteTodoAsync } from '../store/todoSlice';
 
-const TodoItem = ({ todo, handleToggleTodo, handleDeleteTodo }) => {
+const TodoItem = ({ todo }) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteTodoAsync(todo.id));
+  };
+
   return (
-    <li key={todo.id}>
-            <span
-              style={{
-                textDecoration: todo.completed ? 'line-through' : 'none',
-                cursor: 'pointer',
-              }}
-              onClick={() => handleToggleTodo(todo.id)}
-            >
-                {todo.text}
-            </span>
-      <button onClick={() => handleDeleteTodo(todo.id)}>Delete</button>
+    <li className={todo.completed ? 'completed' : ''}>
+      {todo.title}
+      <button onClick={handleDelete}>Видалити</button>
     </li>
   );
 };
